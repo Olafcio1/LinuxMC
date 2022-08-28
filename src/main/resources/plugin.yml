@@ -1,0 +1,20 @@
+name: LinuxMC
+version: '0.1'
+main: pl.olafcio.mc.linuxmc.LinuxMC
+api-version: 1.19
+prefix: "LinuxMC"
+load: STARTUP
+authors: [ Olafcio ]
+description: Run shell commands in Minecraft.
+
+commands:
+  runcmd:
+    description: "Runs specified shell command, and returns what specified command returned."
+    usage: "§7No enough arguments! Usage: §c§o/runcmd §7[command]"
+    permission: linuxmc.runcmd
+    default-permission: op
+  isProxyEnabled:
+    description: "Check is proxy enabled in plugin configuration."
+    usage: "§7Too many arguments! Usage: §c§o/isProxyEnabled"
+    permission: linuxmc.isProxyEnabled
+    default-permission: op
