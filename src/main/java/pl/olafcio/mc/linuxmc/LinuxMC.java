@@ -51,6 +51,10 @@ public final class LinuxMC extends JavaPlugin {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (label.equalsIgnoreCase("runcmd") || label.equalsIgnoreCase("linuxmc:runcmd")) {
+            if (!sender.hasPermission("linuxmc.runcmd")) {
+                sender.sendMessage("§cNo permission!");
+                return true;
+            }
             String fixedArgs = Arrays.toString(args).replace("[", "").replace("]", "").replace(",", "");
             if (getConfig().getBoolean("enable-proxy")) {
                 System.setProperty("user.dir", "/home/container/proxy");
@@ -81,6 +85,10 @@ public final class LinuxMC extends JavaPlugin {
                 sender.sendMessage(line);
             }
         } else if (label.equalsIgnoreCase("isProxyEnabled") || label.equalsIgnoreCase("linuxmc:isProxyEnabled")) {
+            if (!sender.hasPermission("linuxmc.isProxyEnabled")) {
+                sender.sendMessage("§cNo permission!");
+                return true;
+            }
             if (args.length > 0) {
                 return false;
             }
