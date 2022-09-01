@@ -1,1 +1,4 @@
+# If startup-script is empty, it just doesn't do anything.
+startup-script: ""
+# Enable-proxy is in beta, and probably is not working!
 enable-proxy: false

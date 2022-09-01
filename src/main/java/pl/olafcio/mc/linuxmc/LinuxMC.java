@@ -18,12 +18,45 @@ public final class LinuxMC extends JavaPlugin {
         // Plugin startup logic
         super.onEnable();
 
+        if (getConfig().getString("startup-script") != "") {
+            getLogger().info("Starting script: "+getConfig().getString("startup-script"));
+            Runnable r = new Runnable() {
+                Runtime run = Runtime.getRuntime();
+                @Override
+                public void run() {
+                    Process pr = null;
+                    try {
+                        pr = run.exec(getConfig().getString("startup-script"));
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                    try {
+                        pr.waitFor();
+                    } catch (InterruptedException e) {
+                        throw new RuntimeException(e);
+                    }
+                    BufferedReader buf = new BufferedReader(new InputStreamReader(pr.getInputStream()));
+                    String line = "";
+                    while (true) {
+                        try {
+                            if (!((line = buf.readLine()) != null)) break;
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        }
+                        getLogger().info(line);
+                    }
+                }
+            };
+
+            new Thread(r).start();
+        }
+
         getConfig().options().copyDefaults(true);
         saveConfig();
         if (getConfig().getBoolean("enable-proxy")) {
             Runnable r = new Runnable() {
+                Runtime run = Runtime.getRuntime();
                 public void run() {
-                    Runtime run = Runtime.getRuntime();
                     try {
                         URL url = new URL("file:///home/container/proxy/server.jar");
                         URL[] urls = new URL[]{url};
