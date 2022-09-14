@@ -1,5 +1,5 @@
 name: LinuxMC
-version: '0.2'
+version: '0.3'
 main: pl.olafcio.mc.linuxmc.LinuxMC
 api-version: 1.19
 prefix: "LinuxMC"
