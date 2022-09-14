@@ -1,4 +1,6 @@
 # If startup-script is empty, it just doesn't do anything.
 startup-script: ""
+# The script will run when shutdown,restart or reload.
+shutdown-script: ""
 # Enable-proxy is in beta, and probably is not working!
 enable-proxy: false
