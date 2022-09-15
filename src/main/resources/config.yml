@@ -1,6 +1,6 @@
-# If startup-script is empty, it just doesn't do anything.
+# The script will run on server start. If it is empty, it just doesn't do anything.
 startup-script: ""
-# The script will run when shutdown,restart or reload.
+# The script will run when server shutdown, restart or reload. If it is empty, it just doesn't do anything.
 shutdown-script: ""
 # Enable-proxy is in beta, and probably is not working!
 enable-proxy: false
