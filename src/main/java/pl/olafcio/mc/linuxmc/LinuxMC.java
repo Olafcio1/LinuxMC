@@ -80,6 +80,39 @@ public final class LinuxMC extends JavaPlugin {
     public void onDisable() {
         // Plugin shutdown logic
         super.onDisable();
+        
+        if (getConfig().getString("shutdown-script") != "") {
+            getLogger().info("Starting script: "+getConfig().getString("shutdown-script"));
+            Runnable r = new Runnable() {
+                Runtime run = Runtime.getRuntime();
+                @Override
+                public void run() {
+                    Process pr = null;
+                    try {
+                        pr = run.exec(getConfig().getString("shutdown-script"));
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                    try {
+                        pr.waitFor();
+                    } catch (InterruptedException e) {
+                        throw new RuntimeException(e);
+                    }
+                    BufferedReader buf = new BufferedReader(new InputStreamReader(pr.getInputStream()));
+                    String line = "";
+                    while (true) {
+                        try {
+                            if (!((line = buf.readLine()) != null)) break;
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        }
+                        getLogger().info(line);
+                    }
+                }
+            };
+            
+            new Thread(r).start();
+        }
     }
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
